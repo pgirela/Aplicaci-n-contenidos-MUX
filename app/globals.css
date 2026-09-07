@@ -1,0 +1,185 @@
+@font-face {
+  font-family: "Telegraf";
+  src: url("/fonts/Telegraf-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Telegraf";
+  src: url("/fonts/Telegraf-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-heading: "Telegraf", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Telegraf", "Helvetica Neue", Arial, sans-serif;
+
+  --color-bg: #fafafa;
+  --color-text: #484848;
+  --color-divider: #e8e6e3;
+
+  --color-primary: #28568c;
+  --color-edem: #2489b7;
+  --color-angels: #083a66;
+  --color-crema: #f2efe4;
+
+  --color-accent: #f6583c;
+  --color-accent-100: #fdeeea;
+  --color-accent-200: #fac6a8;
+  --color-accent-700: #b93820;
+
+  --color-neutral-100: #fefefe;
+  --color-neutral-200: #fafafa;
+  --color-neutral-300: #f4f4f4;
+  --color-neutral-400: #e8e6e3;
+  --color-neutral-500: #cfc9c4;
+  --color-neutral-600: #a9a39e;
+  --color-neutral-700: #8b8b8b;
+  --color-neutral-800: #4a4544;
+  --color-neutral-900: #2e2a28;
+
+  --color-ok: #4f8c63;
+  --color-pend: #d9542e;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+h1,
+h2,
+h3 {
+  color: var(--color-angels);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color-edem);
+}
+:focus-visible {
+  outline: 2px solid var(--color-edem);
+  outline-offset: 2px;
+}
+::selection {
+  background: var(--color-accent-200);
+}
+button {
+  font-family: inherit;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+}
+.btn-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-edem);
+  border-color: var(--color-edem);
+}
+.btn-secondary {
+  border-color: var(--color-neutral-500);
+}
+.btn-secondary:hover {
+  background: rgba(72, 72, 72, 0.07);
+}
+.btn-ghost {
+  color: var(--color-accent);
+  padding-inline: 4px;
+}
+.btn-ghost:hover {
+  background: rgba(246, 88, 60, 0.1);
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: rgba(72, 72, 72, 0.7);
+}
+.input {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-text);
+  caret-color: var(--color-edem);
+  background: #fff;
+  border: 1px solid var(--color-neutral-500);
+  border-radius: var(--radius-sm);
+}
+.input:hover {
+  border-color: var(--color-neutral-700);
+}
+.input:focus-visible,
+.input:focus {
+  outline: 2px solid var(--color-edem);
+  outline-offset: 1px;
+  border-color: var(--color-edem);
+}
+textarea.input {
+  font-family: var(--font-body);
+  line-height: 1.55;
+  resize: vertical;
+  min-height: 90px;
+}
+
+.banner-msg {
+  font-size: 13px;
+  padding: 10px 32px;
+  text-align: center;
+}
+.banner-info {
+  background: var(--color-crema);
+  color: var(--color-text);
+}
+.banner-error {
+  background: var(--color-accent-100);
+  color: var(--color-accent-700);
+}
+
+.card-row:hover {
+  background: var(--color-neutral-200);
+}
