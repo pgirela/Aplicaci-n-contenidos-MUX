@@ -16,6 +16,7 @@ export default function Page() {
   const [abierta, setAbierta] = useState(null);
   const [form, setForm] = useState(null); // { modo: 'nuevo' | 'editar', id }
   const [borrarId, setBorrarId] = useState(null);
+  const [filtroTipos, setFiltroTipos] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -77,6 +78,13 @@ export default function Page() {
   sesiones.forEach((s) => {
     if (s.tipo && tiposExistentes.indexOf(s.tipo) < 0) tiposExistentes.push(s.tipo);
   });
+  tiposExistentes.sort((a, b) => a.localeCompare(b, "es"));
+
+  const sesionesFiltradas = filtroTipos.length === 0 ? sesiones : sesiones.filter((s) => filtroTipos.includes(s.tipo));
+
+  function toggleTipo(tipo) {
+    setFiltroTipos((actuales) => (actuales.includes(tipo) ? actuales.filter((t) => t !== tipo) : actuales.concat([tipo])));
+  }
 
   const sesionEnEdicion = form && form.modo === "editar" ? sesiones.find((s) => s.id === form.id) : null;
   const sesionABorrar = borrarId ? sesiones.find((s) => s.id === borrarId) : null;
@@ -93,11 +101,19 @@ export default function Page() {
         </div>
       ) : null}
 
-      <Header sesiones={sesiones} bloques={nombres} onNuevaSesion={() => setForm({ modo: "nuevo", id: null })} />
+      <Header
+        sesiones={sesionesFiltradas}
+        bloques={nombres}
+        tipos={tiposExistentes}
+        filtroTipos={filtroTipos}
+        onToggleTipo={toggleTipo}
+        onLimpiarFiltro={() => setFiltroTipos([])}
+        onNuevaSesion={() => setForm({ modo: "nuevo", id: null })}
+      />
 
       <main style={{ maxWidth: 1440, margin: "0 auto", padding: "0 32px 120px" }}>
         {nombres.map((nombre, i) => {
-          const lista = sesiones
+          const lista = sesionesFiltradas
             .filter((s) => (s.bloque || "Sin bloque") === nombre)
             .slice()
             .sort((a, b) => {
@@ -108,6 +124,7 @@ export default function Page() {
               if (!fb) return -1;
               return fa < fb ? -1 : fa > fb ? 1 : 0;
             });
+          if (lista.length === 0) return null;
           const pend = lista.filter((s) => !s.confirmada).length;
 
           return (

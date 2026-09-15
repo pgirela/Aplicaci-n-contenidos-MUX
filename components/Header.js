@@ -1,6 +1,8 @@
 "use client";
 
-export default function Header({ sesiones, bloques, onNuevaSesion }) {
+import { colorTipo } from "@/lib/helpers";
+
+export default function Header({ sesiones, bloques, tipos, filtroTipos, onToggleTipo, onLimpiarFiltro, onNuevaSesion }) {
   const nConfirmadas = sesiones.filter((s) => !!s.confirmada).length;
   const nSinIndice = sesiones.filter((s) => !(s.indice && s.indice.trim())).length;
 
@@ -25,7 +27,7 @@ export default function Header({ sesiones, bloques, onNuevaSesion }) {
           </button>
         </div>
       </div>
-      <nav style={{ maxWidth: 1440, margin: "0 auto", padding: "0 32px 12px", display: "flex", flexWrap: "wrap", gap: 6 }}>
+      <nav style={{ maxWidth: 1440, margin: "0 auto", padding: "0 32px 10px", display: "flex", flexWrap: "wrap", gap: 6 }}>
         {bloques.map((nombre, i) => {
           const corto = nombre.length > 26 ? nombre.slice(0, 25) + "…" : nombre;
           return (
@@ -48,7 +50,50 @@ export default function Header({ sesiones, bloques, onNuevaSesion }) {
           );
         })}
       </nav>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 32px 12px", display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6 }}>
+        <span style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--color-neutral-700)", marginRight: 2 }}>Filtrar por tipo</span>
+        <FiltroChip label="Todos" activo={filtroTipos.length === 0} onClick={onLimpiarFiltro} />
+        {tipos.map((tipo) => {
+          const [bg, fg] = colorTipo(tipo);
+          const activo = filtroTipos.includes(tipo);
+          return (
+            <FiltroChip
+              key={tipo}
+              label={tipo}
+              activo={activo}
+              bg={bg}
+              fg={fg}
+              onClick={() => onToggleTipo(tipo)}
+            />
+          );
+        })}
+      </div>
     </header>
+  );
+}
+
+function FiltroChip({ label, activo, bg, fg, onClick }) {
+  const background = activo ? (bg || "var(--color-primary)") : "#fff";
+  const color = activo ? (fg || "#fff") : "var(--color-neutral-800)";
+  return (
+    <button
+      onClick={onClick}
+      aria-pressed={activo}
+      style={{
+        fontSize: 10,
+        fontWeight: 700,
+        letterSpacing: "0.06em",
+        textTransform: "uppercase",
+        padding: "4px 10px",
+        borderRadius: 999,
+        border: activo ? "1px solid transparent" : "1px solid var(--color-neutral-500)",
+        background,
+        color,
+        cursor: "pointer",
+      }}
+    >
+      {label}
+    </button>
   );
 }
 
